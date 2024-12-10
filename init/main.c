@@ -1005,7 +1005,6 @@ void start_kernel(void)
 	 * we've done PCI setups etc, and console_init() must be aware of
 	 * this. But we do want output early, in case something goes wrong.
 	 */
-    printk(KERN_ALERT "Kevin Secaida te da la bienvenida al kernel modificado de Linux Mint.\n");
 	console_init();
 	if (panic_later)
 		panic("Too many boot %s vars at `%s'", panic_later,
