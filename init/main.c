@@ -893,6 +893,7 @@ void start_kernel(void)
 	boot_cpu_init();
 	page_address_init();
 	pr_notice("%s", linux_banner);
+	pr_notice("Bienvenido a USAC Linux - Nombre: Kevin Estuardo Secaida Molina, Carnet: 201602404\n");
 	early_security_init();
 	setup_arch(&command_line);
 	setup_boot_config();
@@ -1008,12 +1009,24 @@ void start_kernel(void)
 
 	printk(KERN_ALERT "Kevin Estuardo Secaida Molina - 201602404\n");
 	printk(KERN_ALERT "Sistemas Operativos 2\n");
-	printk(KERN_ALERT "   _______\n");
-	printk(KERN_ALERT "  /       \\ \n");
-	printk(KERN_ALERT " |   @@@   | \n");
-	printk(KERN_ALERT " |  @   @  | \n");
-	printk(KERN_ALERT " |   @@@   | \n");
-	printk(KERN_ALERT "  \\_______/ \n");
+	printk(KERN_ALERT " /$$$$$$$$  /$$$$$$  /$$$$$$$   /$$$$$$ \n");
+	printk(KERN_ALERT "|__  $$__/ /$$__  $$| $$__  $$ /$$__  $$\n");
+	printk(KERN_ALERT "   | $$   | $$  \\ $$| $$  \\ $$| $$  \\ $$\n");
+	printk(KERN_ALERT "   | $$   | $$$$$$$$| $$$$$$$/| $$  | $$\n");
+	printk(KERN_ALERT "   | $$   | $$__  $$| $$__  $$| $$  | $$\n");
+	printk(KERN_ALERT "   | $$   | $$  | $$| $$  \\ $$| $$  | $$\n");
+	printk(KERN_ALERT "   | $$   | $$  | $$| $$  | $$|  $$$$$$/\n");
+	printk(KERN_ALERT "   |__/   |__/  |__/|__/  |__/ \\______/ \n");
+
+
+	//   /$$$$$$$$  /$$$$$$  /$$$$$$$   /$$$$$$ 
+//  |__  $$__/ /$$__  $$| $$__  $$ /$$__  $$
+//     | $$   | $$  \ $$| $$  \ $$| $$  \ $$
+//     | $$   | $$$$$$$$| $$$$$$$/| $$  | $$
+//     | $$   | $$__  $$| $$__  $$| $$  | $$
+//     | $$   | $$  | $$| $$  \ $$| $$  | $$
+//     | $$   | $$  | $$| $$  | $$|  $$$$$$/
+//     |__/   |__/  |__/|__/  |__/ \______/ 
 	console_init();
 	if (panic_later)
 		panic("Too many boot %s vars at `%s'", panic_later,
