@@ -1008,8 +1008,12 @@ void start_kernel(void)
 
 	printk(KERN_ALERT "Kevin Estuardo Secaida Molina - 201602404\n");
 	printk(KERN_ALERT "Sistemas Operativos 2\n");
-	
-
+	printk(KERN_ALERT "   _______\n");
+	printk(KERN_ALERT "  /       \\ \n");
+	printk(KERN_ALERT " |   @@@   | \n");
+	printk(KERN_ALERT " |  @   @  | \n");
+	printk(KERN_ALERT " |   @@@   | \n");
+	printk(KERN_ALERT "  \\_______/ \n");
 	console_init();
 	if (panic_later)
 		panic("Too many boot %s vars at `%s'", panic_later,
