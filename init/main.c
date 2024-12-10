@@ -1005,6 +1005,11 @@ void start_kernel(void)
 	 * we've done PCI setups etc, and console_init() must be aware of
 	 * this. But we do want output early, in case something goes wrong.
 	 */
+
+	printk(KERN_ALERT "Kevin Estuardo Secaida Molina - 201602404\n");
+	printk(KERN_ALERT "Sistemas Operativos 2\n");
+	
+
 	console_init();
 	if (panic_later)
 		panic("Too many boot %s vars at `%s'", panic_later,
