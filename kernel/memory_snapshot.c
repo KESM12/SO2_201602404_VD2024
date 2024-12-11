@@ -1,6 +1,7 @@
 #include <linux/kernel.h>
 #include <linux/syscalls.h>
 #include <linux/mm.h>
+#include <linux/sched.h>
 #include <linux/uaccess.h>
 
 struct mem_snapshot {
@@ -12,19 +13,17 @@ struct mem_snapshot {
 
 SYSCALL_DEFINE1(capture_memory_snapshot, struct mem_snapshot __user *, snapshot)
 {
-    struct mem_snapshot snap;
+    struct mem_snapshot ksnapshot;
     struct sysinfo si;
 
     si_meminfo(&si);
 
-    snap.total_memory = si.totalram << (PAGE_SHIFT - 10); // Convert to KB
-    snap.free_memory = si.freeram << (PAGE_SHIFT - 10);
-    snap.active_pages = global_node_page_state(NR_ACTIVE_ANON) + 
-                        global_node_page_state(NR_ACTIVE_FILE);
-    snap.inactive_pages = global_node_page_state(NR_INACTIVE_ANON) + 
-                          global_node_page_state(NR_INACTIVE_FILE);
+    ksnapshot.total_memory = si.totalram << (PAGE_SHIFT - 10); // KB
+    ksnapshot.free_memory = si.freeram << (PAGE_SHIFT - 10);  // KB
+    ksnapshot.active_pages = global_node_page_state(NR_ACTIVE_FILE);
+    ksnapshot.inactive_pages = global_node_page_state(NR_INACTIVE_FILE);
 
-    if (copy_to_user(snapshot, &snap, sizeof(snap)))
+    if (copy_to_user(snapshot, &ksnapshot, sizeof(ksnapshot)))
         return -EFAULT;
 
     return 0;
