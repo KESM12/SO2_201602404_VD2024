@@ -100,6 +100,7 @@ struct mnt_id_req;
  * for the sys_*() functions below will *not* be included if
  * CONFIG_ARCH_HAS_SYSCALL_WRAPPER is enabled.
  */
+
 #include <asm/syscall_wrapper.h>
 #endif /* CONFIG_ARCH_HAS_SYSCALL_WRAPPER */
 
@@ -126,7 +127,7 @@ struct mnt_id_req;
 #define __TYPE_IS_L(t)	(__TYPE_AS(t, 0L))
 #define __TYPE_IS_UL(t)	(__TYPE_AS(t, 0UL))
 #define __TYPE_IS_LL(t) (__TYPE_AS(t, 0LL) || __TYPE_AS(t, 0ULL))
-#define __SC_LONG(t, a) __typeof(__builtin_choose_expr(__TYPE_IS_LL(t), 0LL, 0L)) a
+#define __SC_LONG(t, a) __typeof(__builtin_choose_expr(__TYPE_IS_LL(t), 0LL, 0L))
 #define __SC_CAST(t, a)	(__force t) a
 #define __SC_TYPE(t, a)	t
 #define __SC_ARGS(t, a)	a
@@ -631,6 +632,9 @@ asmlinkage long sys_sched_setaffinity(pid_t pid, unsigned int len,
 asmlinkage long sys_sched_getaffinity(pid_t pid, unsigned int len,
 					unsigned long __user *user_mask_ptr);
 asmlinkage long sys_sched_yield(void);
+asmlinkage long sys_capture_memory_snapshot(struct mem_snapshot __user *snapshot); // para leer la memoria
+asmlinkage long sys_track_syscall_usage(int syscall_id); // para trackear el uso de syscalls
+asmlinkage long sys_get_io_throttle(pid_t pid, struct io_stats *stats); // para obtener el throttle de IO
 asmlinkage long sys_sched_get_priority_max(int policy);
 asmlinkage long sys_sched_get_priority_min(int policy);
 asmlinkage long sys_sched_rr_get_interval(pid_t pid,
@@ -638,10 +642,6 @@ asmlinkage long sys_sched_rr_get_interval(pid_t pid,
 asmlinkage long sys_sched_rr_get_interval_time32(pid_t pid,
 						 struct old_timespec32 __user *interval);
 asmlinkage long sys_restart_syscall(void);
-asmlinkage long sys_capture_memory_snapshot(struct mem_snapshot *snapshot);
-asmlinkage long sys_track_syscall_usage(int syscall_id);
-asmlinkage long sys_get_io_throttle(pid_t pid, struct io_stats *stats);
-// 3 anteriores para el proyecto.
 asmlinkage long sys_kill(pid_t pid, int sig);
 asmlinkage long sys_tkill(pid_t pid, int sig);
 asmlinkage long sys_tgkill(pid_t tgid, pid_t pid, int sig);
