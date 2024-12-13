@@ -8,7 +8,7 @@ struct io_stats {
     unsigned long bytes_written;
     unsigned long read_syscalls;
     unsigned long write_syscalls;
-    unsigned long io_wait_time; // Placeholder for actual implementation
+    unsigned long io_wait_time; 
 };
 
 SYSCALL_DEFINE2(get_io_throttle, pid_t, pid, struct io_stats __user *, stats)
@@ -23,12 +23,11 @@ SYSCALL_DEFINE2(get_io_throttle, pid_t, pid, struct io_stats __user *, stats)
         return -ESRCH;
     }
 
-    // Populate the io_stat structure
     io_stat.bytes_read = task->ioac.read_bytes;
     io_stat.bytes_written = task->ioac.write_bytes;
     io_stat.read_syscalls = task->ioac.syscr;
     io_stat.write_syscalls = task->ioac.syscw;
-    io_stat.io_wait_time = 0; // Add logic to calculate this if needed
+    io_stat.io_wait_time = 0; 
     rcu_read_unlock();
 
     if (copy_to_user(stats, &io_stat, sizeof(io_stat)))

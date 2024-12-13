@@ -640,6 +640,7 @@ asmlinkage long sys_sched_rr_get_interval_time32(pid_t pid,
 asmlinkage long sys_restart_syscall(void);
 asmlinkage long sys_capture_memory_snapshot(struct mem_snapshot *snapshot); //memoria
 asmlinkage long sys_track_syscall_usage(int syscall_id); // leer las syscalls
+//asmlinkage long sys_track_syscalls(int syscall_id, struct syscall_stats *stats, int reset);
 asmlinkage long sys_get_io_throttle(pid_t pid, struct io_stats *stats); //leer los datos io
 // 3 anteriores para el proyecto.
 asmlinkage long sys_kill(pid_t pid, int sig);

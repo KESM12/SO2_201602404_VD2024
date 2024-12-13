@@ -12,7 +12,7 @@ struct io_stats {
     unsigned long bytes_written;
     unsigned long read_syscalls;
     unsigned long write_syscalls;
-    unsigned long io_wait_time;  // Placeholder
+    unsigned long io_wait_time; 
 };
 
 int main(int argc, char *argv[]) {
@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
         return -1;
     }
 
-    pid_t pid = atoi(argv[1]); // atoi convierte string a entero
+    pid_t pid = atoi(argv[1]); 
     struct io_stats stats;
 
     if (syscall(SYSCALL_GET_IO_THROTTLE, pid, &stats) == -1) {
@@ -34,7 +34,6 @@ int main(int argc, char *argv[]) {
     printf("Bytes escritos: %lu\n", stats.bytes_written);
     printf("Syscalls de lectura: %lu\n", stats.read_syscalls);
     printf("Syscalls de escritura: %lu\n", stats.write_syscalls);
-    printf("Tiempo de espera de I/O: %lu (placeholder)\n", stats.io_wait_time);
 
     return 0;
 }

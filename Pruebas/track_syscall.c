@@ -6,7 +6,7 @@
 #define SYSCALL_TRACK_SYSCALL_USAGE 549
 
 int main() {
-    int syscall_id = __NR_write;  // Por ejemplo, rastrear la syscall 'write'
+    int syscall_id = __NR_open; 
     long count;
 
     count = syscall(SYSCALL_TRACK_SYSCALL_USAGE, syscall_id);

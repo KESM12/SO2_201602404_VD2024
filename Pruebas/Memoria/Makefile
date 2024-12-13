@@ -1,20 +1,12 @@
-# Especifica el nombre del módulo
-obj-m += memory_snapshot.o
+KERNELRELEASE = $(shell uname -r)
+EXTRA_CFLAGS += -I/lib/modules/$(shell uname -r)/build/include
+EXTRA_CFLAGS += -I/lib/modules/$(shell uname -r)/build/kernel
 
-# Ruta al código fuente del kernel
-KDIR := /lib/modules/$(shell uname -r)/build
+obj-m += memoria.o
 
-# Ruta del directorio actual
-PWD := $(shell pwd)
+all: 
+	make -C /lib/modules/$(KERNELRELEASE)/build M=$(PWD) modules
 
-# Regla para compilar el módulo
-all:
-	$(MAKE) -C $(KDIR) M=$(PWD) modules
-	@rm -f *.o *.mod.c *.order *.symvers
-
-# Limpieza de los archivos generados
 clean:
-	$(MAKE) -C $(KDIR) M=$(PWD) clean
-
-
-
+	make -C /lib/modules/$(KERNELRELEASE)/build M=$(PWD) clean
+	
