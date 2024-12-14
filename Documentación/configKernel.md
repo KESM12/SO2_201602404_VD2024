@@ -48,3 +48,5 @@ Configuración de symlinks para evitar cargar todo el kernel al repositorio.
 
 ## Paso 4.
 En este paso ya sabemos como linkear archivo y carpetas (es el mismo proceso) desde nuestro repositorio a nuestro kernel entonces podemos avanzar con la modificación del kernel. 
+
+Despues de todos los pasos anteriores cada vez que realicemos un cambio o que queramos compilar un cambio pues se recomienda utilizar el archivo ![Compilación](https://github.com/brianmatus/VD2024-so2-lab/blob/master/help%20scripts/compile_and_install.sh) para mayor facilidad, se recomienda leerlo para saber que opciones tomar pero en lo personal me salto el make clean unas 5 veces y luego le doy que si y enter a todas las demas opciones.
