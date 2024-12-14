@@ -36,7 +36,7 @@ sudo update-grub2
 
 Realizando los pasos anterirores luego de que el sistema se haya reiniciado podemos validar si nuestra configuración surtio efecto ejecuatando el comando `uname -r` esto nos lanzara en consola un mensaje como este `linux-6.8-49-usac1`.
 
-![Kernel Configuration](Documentación\images\kernel.png)
+![Kernel Configuration](https://github.com/KESM12/SO2_201602404_VD2024/blob/50e4d6dbe060076000a920becca1ac5bd0ec3e2b/Documentaci%C3%B3n/images/symlink.png)
 
 ## Paso 3.
 Configuración de symlinks para evitar cargar todo el kernel al repositorio.
