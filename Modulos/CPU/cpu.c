@@ -72,7 +72,7 @@ static int escribir_a_proc(struct seq_file *file_proc, void *v)
     prev_idle = idle;
 
     // Escribir el resultado en el archivo /proc
-    seq_printf(file_proc, "{\n\"cpu_usage\": %u.%02u%%\n}\n", usage / 100, usage % 100);
+    seq_printf(file_proc, "{\n\"Uso del CPU\": %u.%02u%%\n}\n", usage / 100, usage % 100);
 
     return 0;
 }

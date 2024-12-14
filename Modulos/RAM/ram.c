@@ -5,7 +5,7 @@
 #include <linux/mm.h>
 
 MODULE_LICENSE("GPL");
-MODULE_AUTHOR("KEMS -- MC");
+MODULE_AUTHOR("KEMS");
 MODULE_DESCRIPTION("Informacion de la RAM");
 MODULE_VERSION("1.0");
 
