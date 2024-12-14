@@ -12,7 +12,7 @@ Comprender y manipular las funcionalidades internas del kernel es clave para opt
 Para terminos del proyecto se utilizo un kernel (linux 6.8-1-usac1) modificado en base a un kernel base (linux 6.8), para validar esto se descargo el kernel desde el sitio oficial, se descomprimio y se siguieron los pasos proporcionados por el auxiliar para la instalación del nuevo kernel.
 
 ## Entorno configurado
-![Configuración del Entorno](https://github.com/KESM12/SO2_201602404_VD2024/blob/main/Documentaci%C3%B3n/images/kernel.png)
+![Configuración del Entorno](https://github.com/KESM12/SO2_201602404_VD2024/blob/main/Documentaci%C3%B3n/images/kernel.png)  
 validación del kernel (configuración adjunta). [Configuracion Kernel](https://github.com/KESM12/SO2_201602404_VD2024/blob/main/Documentaci%C3%B3n/configKernel.md)
 
 ![Configuración de carpetas](https://github.com/KESM12/SO2_201602404_VD2024/blob/main/Documentaci%C3%B3n/images/entorno1.png)
