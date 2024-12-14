@@ -13,7 +13,7 @@ Para terminos del proyecto se utilizo un kernel (linux 6.8-1-usac1) modificado e
 
 ## Entorno configurado
 ![Configuración del Entorno](Documentación\images\kernel.png)
-validación del kernel.
+validación del kernel (configuración adjunta).
 
 ![Configuración de carpetas](Documentación\images\entorno1.png)
 Estructura de las carpetas para el proyecto.
