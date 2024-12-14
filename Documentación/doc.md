@@ -19,6 +19,7 @@ validación del kernel (configuración adjunta). [Configuracion Kernel](https://
 Estructura de las carpetas para el proyecto.
 
 Entre los archivos que se utilizaron para el proyecto podemos mencionar:
+
     - syscall_64.tbl (Tabla donde se almacenan el registro de las syscalls)
     - main.c (Archivo donde se coloco el mensaje de bienvenida.)
     - open.c y read_write.c (Archivo donde se coloco el contador para la syscall2)
