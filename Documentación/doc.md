@@ -470,9 +470,10 @@ int main(int argc, char *argv[]) {
     return 0;
 }
 ```
+Forma de verlo en la terminal.  
 ![Pruebas de las syscalls](https://github.com/KESM12/SO2_201602404_VD2024/blob/main/Documentaci%C3%B3n/images/pruebasUsuario.png)
 
-Pruebas de los módulos.
+Pruebas de los módulos.  
 Cada prueba se realizo luego de haber montado el módulo.
 ![Pruebas de los modulos](https://github.com/KESM12/SO2_201602404_VD2024/blob/main/Documentaci%C3%B3n/images/modulos.png)
 
