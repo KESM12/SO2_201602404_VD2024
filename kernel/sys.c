@@ -175,6 +175,10 @@ EXPORT_SYMBOL(fs_overflowgid);
  *
  * Called with rcu_read_lock, creds are safe
  */
+
+/*Arreglo global para rastrear las syscall*/
+unsigned long syscall_usage[__NR_syscalls] = {0};
+
 static bool set_one_prio_perm(struct task_struct *p)
 {
 	const struct cred *cred = current_cred(), *pcred = __task_cred(p);

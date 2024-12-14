@@ -1,20 +1,39 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <sys/syscall.h>
-#include <errno.h>
+#include <string.h>
+#include <time.h>  
+#include <sys/types.h>
 
-#define SYSCALL_TRACK_SYSCALL_USAGE 549
+struct timespec64 {
+    long tv_sec;   
+    long tv_nsec;  
+};
+
+struct syscall_usage {
+    unsigned long count;                    
+    struct timespec64 time_last_used;       
+};
+
+#define MAX_SYS_CALLS 4
+#define __NR_track_syscall_usage 549
 
 int main() {
-    int syscall_id = __NR_open; 
-    long count;
+    struct syscall_usage statistics[MAX_SYS_CALLS];
 
-    count = syscall(SYSCALL_TRACK_SYSCALL_USAGE, syscall_id);
-    if (count < 0) {
-        perror("Error en track_syscall_usage");
-        return errno;
+    if (syscall(__NR_track_syscall_usage, statistics) < 0) {
+        perror("Error en racso_track_syscall_usage");
+        return EXIT_FAILURE;
     }
 
-    printf("Syscall %d ha sido llamada %ld veces\n", syscall_id, count);
-    return 0;
+    // Imprimir resultados
+    for (int i = 0; i < MAX_SYS_CALLS; i++) {
+        printf("Syscall ID %d: Count = %lu\n", i, statistics[i].count);
+        printf("Última vez usada: %ld.%09ld\n", 
+               statistics[i].time_last_used.tv_sec, 
+               statistics[i].time_last_used.tv_nsec);
+    }
+
+    return EXIT_SUCCESS;
 }

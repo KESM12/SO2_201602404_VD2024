@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "tracksyscalls.h": "c",
+        "DISK.C": "cpp"
+    }
+}
