@@ -71,11 +71,11 @@ asmlinkage long sys_get_io_throttle(pid_t pid, struct io_stats *stats); //leer l
 ### Modificaciones en uts.h
 Se modifico el nombre del sistema.
 ```bash
-    \#define UTS_SYSNAME "Linux Modificado por Kevin Secaida"
+    #define UTS_SYSNAME "Linux Modificado por Kevin Secaida"
 ```
 ### Modificaciones a kernel (carpeta).
-Estructura: 
-![Estructrua del kernel](https://github.com/KESM12/SO2_201602404_VD2024/blob/main/Documentaci%C3%B3n/images/estructurakernel.png)
+Estructura:  
+![Estructrua del kernel](https://github.com/KESM12/SO2_201602404_VD2024/blob/main/Documentaci%C3%B3n/images/estructurakernel.png)  
 En este entorno se crearon las syscall del sistema `memory_snapshot.c`, `track_syscalls.c`, `io_throttle.c`, dentro de la carpeta `include` se agrego el archivo `tracksyscalls.h` el cual seria para realizar importaciones en otros archivos cuando se requiera llamar a track_syscalls.c. 
 
 Código de memory_snapshot.c.
