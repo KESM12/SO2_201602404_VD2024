@@ -1,1 +1,0 @@
-savedcmd_/home/kevin/Desktop/SO2_201602404_VD2024/Modulos/STORAGE/disk.mod := printf '%s\n'   disk.o | awk '!x[$$0]++ { print("/home/kevin/Desktop/SO2_201602404_VD2024/Modulos/STORAGE/"$$0) }' > /home/kevin/Desktop/SO2_201602404_VD2024/Modulos/STORAGE/disk.mod

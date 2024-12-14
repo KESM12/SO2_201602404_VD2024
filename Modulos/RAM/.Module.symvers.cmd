@@ -1,1 +1,0 @@
-savedcmd_/home/kevin/Desktop/SO2_201602404_VD2024/Modulos/RAM/Module.symvers :=  scripts/mod/modpost -M -m -a      -o /home/kevin/Desktop/SO2_201602404_VD2024/Modulos/RAM/Module.symvers -T /home/kevin/Desktop/SO2_201602404_VD2024/Modulos/RAM/modules.order -i Module.symvers -e 

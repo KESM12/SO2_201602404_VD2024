@@ -1,1 +1,0 @@
-savedcmd_/home/kevin/Desktop/SO2_201602404_VD2024/Modulos/RAM/ram.mod := printf '%s\n'   ram.o | awk '!x[$$0]++ { print("/home/kevin/Desktop/SO2_201602404_VD2024/Modulos/RAM/"$$0) }' > /home/kevin/Desktop/SO2_201602404_VD2024/Modulos/RAM/ram.mod
