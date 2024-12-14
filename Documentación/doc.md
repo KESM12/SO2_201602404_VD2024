@@ -13,7 +13,7 @@ Para terminos del proyecto se utilizo un kernel (linux 6.8-1-usac1) modificado e
 
 ## Entorno configurado
 ![Configuración del Entorno](Documentación\images\kernel.png)
-validación del kernel (configuración adjunta).
+validación del kernel (configuración adjunta). [Configuracion Kernel](https://github.com/KESM12/SO2_201602404_VD2024/blob/main/Documentaci%C3%B3n/configKernel.md)
 
 ![Configuración de carpetas](Documentación\images\entorno1.png)
 Estructura de las carpetas para el proyecto.

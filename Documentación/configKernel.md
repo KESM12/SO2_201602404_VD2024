@@ -36,7 +36,7 @@ sudo update-grub2
 
 Realizando los pasos anterirores luego de que el sistema se haya reiniciado podemos validar si nuestra configuración surtio efecto ejecuatando el comando `uname -r` esto nos lanzara en consola un mensaje como este `linux-6.8-49-usac1`.
 
-![Kernel Configuration](https://github.com/KESM12/SO2_201602404_VD2024/blob/50e4d6dbe060076000a920becca1ac5bd0ec3e2b/Documentaci%C3%B3n/images/symlink.png)
+![Kernel Configuration](https://github.com/KESM12/SO2_201602404_VD2024/blob/main/Documentaci%C3%B3n/images/kernel.png)
 
 ## Paso 3.
 Configuración de symlinks para evitar cargar todo el kernel al repositorio.
@@ -44,4 +44,7 @@ Configuración de symlinks para evitar cargar todo el kernel al repositorio.
 2.- Validar la ruta y crear todas las carpetas necesarias que hagan referencia dentro del kernel.
 3.- En la terminal ejecutar el comando `ln -s rutadondeestaelarchivo rutadondeestaraelsymlink`
 
-![Symlink Configuration](Documentación\images\symlink.png)
+![Symlink Configuration](https://github.com/KESM12/SO2_201602404_VD2024/blob/main/Documentaci%C3%B3n/images/symlink.png)
+
+## Paso 4.
+En este paso ya sabemos como linkear archivo y carpetas (es el mismo proceso) desde nuestro repositorio a nuestro kernel entonces podemos avanzar con la modificación del kernel. 
