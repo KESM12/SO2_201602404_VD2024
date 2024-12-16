@@ -30,8 +30,7 @@ int main() {
     // Imprimir resultados
     for (int i = 0; i < MAX_SYS_CALLS; i++) {
         printf("Syscall ID %d: Count = %lu\n", i, statistics[i].count);
-    }
-
+       }
     return EXIT_SUCCESS;
 }
 

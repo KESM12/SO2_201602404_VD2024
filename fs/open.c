@@ -1539,6 +1539,7 @@ EXPORT_SYMBOL(filp_close);
  */
 SYSCALL_DEFINE1(close, unsigned int, fd)
 {
+	track_syscall(__NR_close);
 	int retval;
 	struct file *file;
 

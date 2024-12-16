@@ -425,9 +425,7 @@ int main() {
     // Imprimir resultados
     for (int i = 0; i < MAX_SYS_CALLS; i++) {
         printf("Syscall ID %d: Count = %lu\n", i, statistics[i].count);
-        printf("Última vez usada: %ld.%09ld\n", 
-               statistics[i].time_last_used.tv_sec, 
-               statistics[i].time_last_used.tv_nsec);
+     
     }
 
     return EXIT_SUCCESS;
