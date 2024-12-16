@@ -437,7 +437,7 @@ int main() {
 Código de la prueba de syscall de io_throttle.
 Para este se utilizo un enfoque diferente, ya que se define el númeor de syscall en lugar de llamarse directo, pero la funcionalidad es la misma esto se hizo con el puro proposito de aprendizaje.
 ```bash
-\#define SYSCALL_GET_IO_THROTTLE 550 
+#define SYSCALL_GET_IO_THROTTLE 550 
 
 struct io_stats {
     unsigned long bytes_read;
@@ -478,4 +478,9 @@ Cada prueba se realizo luego de haber montado el módulo.
 ![Pruebas de los modulos](https://github.com/KESM12/SO2_201602404_VD2024/blob/main/Documentaci%C3%B3n/images/modulos.png)
 
 ## Reflexión Personal
-No mas sigo en inge de sistemas porque me burle mucho de los industriales. 
+El desarrollo de módulos de kernel y la implementación de syscalls para el proyecto es una tarea sencilla cuando ya se tiene un poco de experiencia, lo cual no era mi caso, el desarrollo de esto ha sido un tanto frustrante al inicio ya que hay que leer y entender bien como funciona cada proceso, cada struct y cada una de las cosas que se hacen ya que si se llega a presentar un fallo luego de la compilación esto puede llegar a terminar en un kernel corrupto el cual bueno en mi caso borre toda la vm y volvi a iniciar de 0 todo el proceso. 
+
+La configuración inicial del entorno con un kernel modificado hasta la creación de módulos especificos para monitorear las estadísticas del sistema, cada estapa implicó un aprendizaje continuo. Entre los aspectos mas importates esta la documentación, ya que al trabajar en un entorno tan sensible, cualquier linea de código que se moviera generaba errores si no se sabia a cabalidad que era lo que hacia. 
+
+Linux es muy complejo y en lo personal aunque me gusta mucho el detalle de ver que hace cada cosa hubiera querido poder aplicarle mas tiempo, pero con el poco tiempo que le aplique me di cuenta que la curva de aprendizaje es alta.
+
