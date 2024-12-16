@@ -418,7 +418,7 @@ int main() {
     struct syscall_usage statistics[MAX_SYS_CALLS];
 
     if (syscall(__NR_track_syscall_usage, statistics) < 0) {
-        perror("Error en racso_track_syscall_usage");
+        perror("Error en track_syscall_usage");
         return EXIT_FAILURE;
     }
 
