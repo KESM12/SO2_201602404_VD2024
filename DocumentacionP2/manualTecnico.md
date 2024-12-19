@@ -29,7 +29,7 @@ Describir brevemente el propósito del manual y el proyecto.
 ### 5.1 Scripts de Prueba
 - **Pruebas para Tamalloc**: Asignador de memoria diseñado para no reservar páginas fisicas inmediatamente, obligandolo a inicializar cada pagina en 0 hasta su primer acceso.
 - **Script 1.**: Script en C que hace uso de la syscall 551 para asignar memoria.  
-![Script1](DocumentacionP2\images\tamallocScript1.png)
+![Script1](https://github.com/KESM12/SO2_201602404_VD2024/blob/main/DocumentacionP2/images/tamallocScript1.png)
 
 - **Código.**
 
