@@ -1,8 +1,11 @@
 !<thin>
-//                                              52        `
+//                                              70        `
 memory_snapshot.o/
 track_syscalls.o/
 io_throttle.o/
+taro_tamalloc.o/
+
 /0              0           0     0     644     257120    `
 /19             0           0     0     644     223816    `
 /37             0           0     0     644     219592    `
+/52             0           0     0     644     217416    `
