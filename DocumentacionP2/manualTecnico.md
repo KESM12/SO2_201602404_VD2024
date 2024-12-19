@@ -21,15 +21,18 @@ Describir brevemente el propósito del manual y el proyecto.
 ---
 
 ## 3. Diseño de la Solución
-falta agregar el texto porque se cambio el proyecto.
+
 
 
 
 ## 5. Pruebas y Validación
 ### 5.1 Scripts de Prueba
-- **Pruebas para FIFO**: Descripción y ejemplos.
-- **Pruebas para Round Robin**: Descripción y ejemplos.
-- **Pruebas de sincronización**: Casos donde se verifica la ausencia de condiciones de carrera y deadlocks.
+- **Pruebas para Tamalloc**: Asignador de memoria diseñado para no reservar páginas fisicas inmediatamente, obligandolo a inicializar cada pagina en 0 hasta su primer acceso.
+- **Script 1.**: Script en C que hace uso de la syscall 551 para asignar memoria.  
+![Script1](DocumentacionP2\images\tamallocScript1.png)
+
+- **Código.**
+
 
 ### 5.2 Resultados Obtenidos
 - Análisis del rendimiento de cada algoritmo.
@@ -53,7 +56,9 @@ falta agregar el texto porque se cambio el proyecto.
 
 ## 8. Cronograma
 Día 1. 19/12/2024
-Busqueda de información  
+Busqueda de información, implementación de la syscall taro_tamalloc, script 1 realizado. 
+
+
 
 
 ## 9. Reflexión Personal
