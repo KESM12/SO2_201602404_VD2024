@@ -89,7 +89,8 @@ int main() {
 Día 1. 19/12/2024
 Busqueda de información, implementación de la syscall taro_tamalloc, script 1 realizado. 
 
-
+Día 2. 20/12/2024
+Implementación de código para la syscall de conteo de memoria reservada y memoria utilizada, [https://community.wandisco.com/s/article/Guide-to-Out-of-Memory-OOM-events-and-decoding-their-logging] 
 
 
 ## 9. Reflexión Personal
