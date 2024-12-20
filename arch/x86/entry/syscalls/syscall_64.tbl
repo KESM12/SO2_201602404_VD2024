@@ -430,6 +430,8 @@
 549 common track_syscall_usage sys_track_syscall_usage
 550 common get_io_throttle sys_get_io_throttle
 551 common taro_tamalloc sys_taro_tamalloc
+552 common taro_ind_mem_stats sys_taro_ind_mem_stats
+553 common taro_tod_mem_stats sys_taro_tod_mem_stats
 # This is the end of the legacy x32 range.  Numbers 548 and above are
 # not special and are not to be used for x32-specific syscalls.
 

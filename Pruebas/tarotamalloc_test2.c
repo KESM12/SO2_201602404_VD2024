@@ -50,6 +50,6 @@ int main() {
 
     printf("Después de acceder a la memoria:\n");
     print_rss();
-
+    
     return 0;
 }
