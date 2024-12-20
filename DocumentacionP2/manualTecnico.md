@@ -32,6 +32,37 @@ Describir brevemente el propósito del manual y el proyecto.
 ![Script1](https://github.com/KESM12/SO2_201602404_VD2024/blob/main/DocumentacionP2/images/tamallocScript1.png)
 
 - **Código.**
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/syscall.h>
+
+int main() {
+  #define SYS_TAMALLOC 551
+  printf("PID: %d asignado a taro_Tamalloc.\n", getpid());
+  size_t total_size = 100 * 1024 * 1024; // 100 MB
+
+  // Use the tamalloc syscall
+  char *buffer = (char *)syscall(SYS_TAMALLOC, total_size);
+  if ((long)buffer < 0) {
+    perror("Error en Tamalloc");
+    return 1;
+  }
+  printf("Alojamiento de memoria (%zu bytes) usando Tamalloc en la dirección: %p\n", total_size, buffer);
+
+  for (size_t i = 0; i < total_size; i++) {
+    buffer[i] = 0; // Access each page to initialize it
+    if (i % (1024 * 1024) == 0 && i > 0) { // Every 1 MB
+      printf("%zu MB Comprobados\n", i / (1024 * 1024));
+      sleep(1);
+    }
+  }
+
+  printf("Memoria inicializada correctamente.\n");
+  return 0;
+}
+```
 
 
 ### 5.2 Resultados Obtenidos
