@@ -51,13 +51,18 @@ SYSCALL_DEFINE2(taro_ind_mem_stats, pid_t, pid, struct process_mem_stats __user 
     }
 
     // Calcular el OOM Score
-    local_stats.oom_score = (rss_kb * 1000) / total_memory_kb; // Escalar en rango de 0-1000
-    local_stats.oom_score = local_stats.oom_score + task->signal->oom_score_adj;
+    unsigned long long oom_score = (rss_kb * 1000) / total_memory_kb; // RSS como proporción de memoria total, escalado a 1000
+    int oom_adj = task->signal->oom_score_adj; // Ajuste OOM del proceso
 
-    // Asegurarse de que el OOM Score no sea negativo
-    if (local_stats.oom_score < 0) {
-        local_stats.oom_score = 0;
+    // Aplicar el ajuste de prioridad al OOM Score
+    if (oom_adj > 0) {
+        oom_score = oom_score * (oom_adj + 1000) / 1000;
+    } else if (oom_adj < 0) {
+        oom_score = oom_score / (-oom_adj + 1000) * 1000;
     }
+
+    // Limitar el OOM Score a valores positivos
+    local_stats.oom_score = (oom_score < 0) ? 0 : oom_score;
 
     put_task_struct(task);
 
