@@ -6,80 +6,107 @@
 #include <linux/oom.h> // Incluye funciones relacionadas con el cálculo de OOM
 
 struct process_mem_stats {
+    pid_t pid;                    // PID del proceso
     unsigned long reserved_kb;    // Memoria reservada en KB
     unsigned long committed_kb;   // Memoria utilizada en KB
-    unsigned long committed_pct;  // Porcentaje de memoria utilizada
+    unsigned long committed_pct;  // Porcentaje utilizado
     int oom_score;                // OOM Score
 };
 
-SYSCALL_DEFINE2(taro_ind_mem_stats, pid_t, pid, struct process_mem_stats __user *, stats) {
+SYSCALL_DEFINE3(taro_ind_mem_stats, pid_t, pid, struct process_mem_stats __user *, stats, size_t, stats_len) {
     struct task_struct *task;
-    struct process_mem_stats local_stats = {0};
+    struct process_mem_stats local_stats;
     struct mm_struct *mm;
     unsigned long total_pages;
     unsigned long badness;
     int oom_score_adj;
+    size_t copied = 0;
 
-    if (pid <= 0 || !stats)
+    if (!stats || stats_len == 0)
         return -EINVAL; // Argumentos inválidos
 
-    // Buscar el proceso objetivo por su PID
-    rcu_read_lock();
-    task = find_task_by_vpid(pid);
-    if (!task) {
-        rcu_read_unlock();
-        return -ESRCH; // Proceso no encontrado
-    }
-
-    get_task_struct(task);
-    rcu_read_unlock();
-
-    mm = task->mm;
-    if (!mm) {
-        put_task_struct(task);
-        return -EFAULT; // El proceso no tiene memoria asignada
-    }
-
-    // Calcular memoria reservada en KB
-    local_stats.reserved_kb = (mm->total_vm * PAGE_SIZE) / 1024;
-
-    // Calcular memoria utilizada (committed) en KB
-    local_stats.committed_kb = (get_mm_rss(mm) * PAGE_SIZE) / 1024;
-
-    // Calcular el porcentaje de memoria utilizada
-    if (local_stats.reserved_kb > 0) {
-        local_stats.committed_pct = (local_stats.committed_kb * 100) / local_stats.reserved_kb;
-    } else {
-        local_stats.committed_pct = 0; // Evitar división por cero
-    }
-
-    // Calcular "badness"
+    // Obtener total de páginas del sistema
     total_pages = totalram_pages();
-    badness = oom_badness(task, total_pages);
 
-    // Obtener el ajuste de OOM Score
-    oom_score_adj = task->signal->oom_score_adj;
+    if (pid > 0) {
+        // Buscar el proceso objetivo por su PID
+        rcu_read_lock();
+        task = find_task_by_vpid(pid);
+        if (!task) {
+            rcu_read_unlock();
+            return -ESRCH; // Proceso no encontrado
+        }
+        get_task_struct(task);
+        rcu_read_unlock();
 
-    // Aplicar ajuste y escalar al rango de 0-1000
-    badness = (badness * 1000) / total_pages;
-    badness += oom_score_adj;
+        mm = task->mm;
+        if (!mm) {
+            put_task_struct(task);
+            return -EFAULT; // El proceso no tiene memoria asignada
+        }
 
-    // Asegurar que el puntaje esté dentro del rango [0, 1000]
-    if (badness < 0)
-        badness = 0;
-    if (badness > 1000)
-        badness = 1000;
+        // Calcular estadísticas
+        local_stats.pid = pid;
+        local_stats.reserved_kb = (mm->total_vm * PAGE_SIZE) / 1024;
+        local_stats.committed_kb = (get_mm_rss(mm) * PAGE_SIZE) / 1024;
+        local_stats.committed_pct = local_stats.reserved_kb > 0
+                                        ? (local_stats.committed_kb * 100) / local_stats.reserved_kb
+                                        : 0;
 
-    local_stats.oom_score = badness;
+        // Calcular OOM Score
+        badness = oom_badness(task, total_pages);
+        oom_score_adj = task->signal->oom_score_adj;
+        badness += (badness * oom_score_adj) / 1000;
+        local_stats.oom_score = badness > 1000 ? 1000 : (badness < 0 ? 0 : badness);
 
-    put_task_struct(task);
+        put_task_struct(task);
 
-    // Copiar resultados al espacio de usuario
-    if (copy_to_user(stats, &local_stats, sizeof(local_stats)))
-        return -EFAULT;
+        // Copiar datos al espacio de usuario
+        if (copy_to_user(stats, &local_stats, sizeof(local_stats)))
+            return -EFAULT;
 
-    return 0; // Éxito
+        return sizeof(local_stats);
+    } else {
+        // Recorrer todos los procesos en el sistema
+        rcu_read_lock();
+        for_each_process(task) {
+            if (copied + sizeof(local_stats) > stats_len) {
+                rcu_read_unlock();
+                return -ENOSPC; // Espacio insuficiente en el buffer
+            }
+
+            mm = task->mm;
+            if (!mm)
+                continue;
+
+            // Calcular estadísticas
+            local_stats.pid = task->pid;
+            local_stats.reserved_kb = (mm->total_vm * PAGE_SIZE) / 1024;
+            local_stats.committed_kb = (get_mm_rss(mm) * PAGE_SIZE) / 1024;
+            local_stats.committed_pct = local_stats.reserved_kb > 0
+                                            ? (local_stats.committed_kb * 100) / local_stats.reserved_kb
+                                            : 0;
+
+            // Calcular OOM Score
+            badness = oom_badness(task, total_pages);
+            oom_score_adj = task->signal->oom_score_adj;
+            badness += (badness * oom_score_adj) / 1000;
+            local_stats.oom_score = badness > 1000 ? 1000 : (badness < 0 ? 0 : badness);
+
+            // Copiar datos al espacio de usuario
+            if (copy_to_user((void __user *)((char __user *)stats + copied), &local_stats, sizeof(local_stats))) {
+                rcu_read_unlock();
+                return -EFAULT;
+            }
+
+            copied += sizeof(local_stats);
+        }
+        rcu_read_unlock();
+
+        return copied; // Retorna la cantidad de datos copiados
+    }
 }
+
 
 
 

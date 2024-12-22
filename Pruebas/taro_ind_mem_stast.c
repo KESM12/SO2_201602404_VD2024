@@ -3,89 +3,56 @@
 #include <unistd.h>
 #include <sys/syscall.h>
 #include <errno.h>
+#include <string.h>
+
+#define MAX_PROCESSES 1024
 
 struct process_mem_stats {
+    pid_t pid;                    // PID del proceso
     unsigned long reserved_kb;    // Memoria reservada en KB
     unsigned long committed_kb;   // Memoria utilizada en KB
-    unsigned long committed_pct;  // Porcentaje de memoria utilizada
+    unsigned long committed_pct;  // Porcentaje utilizado
     int oom_score;                // OOM Score
 };
 
-void check_proc_oom_score(pid_t pid) {
-    char path[256];
-    snprintf(path, sizeof(path), "/proc/%d/oom_score", pid);
+void print_table_header() {
+    printf("%-10s %-15s %-15s %-10s %-10s\n", "PID", "Reserved (KB)", "Committed (KB)", "Pct (%)", "OOM Score");
+    printf("%-10s %-15s %-15s %-10s %-10s\n", "----------", "---------------", "---------------", "----------", "----------");
+}
 
-    FILE *fp = fopen(path, "r");
-    if (!fp) {
-        perror("Error al leer /proc/[pid]/oom_score");
-        return;
-    }
-
-    int proc_oom_score;
-    fscanf(fp, "%d", &proc_oom_score);
-    fclose(fp);
-
-    printf("OOM Score desde /proc: %d\n", proc_oom_score);
+void print_process_stats(struct process_mem_stats *stats) {
+    printf("%-10d %-15lu %-15lu %-10lu %-10d\n",
+           stats->pid,
+           stats->reserved_kb,
+           stats->committed_kb,
+           stats->committed_pct,
+           stats->oom_score);
 }
 
 int main(int argc, char *argv[]) {
     if (argc != 2) {
-        fprintf(stderr, "Uso: %s <pid>\n", argv[0]);
+        fprintf(stderr, "Uso: %s <pid|0>\n", argv[0]);
         return 1;
     }
 
     pid_t pid = atoi(argv[1]);
-    struct process_mem_stats stats;
+    struct process_mem_stats stats[MAX_PROCESSES];
+    size_t buffer_size = sizeof(stats);
 
-    if (syscall(552, pid, &stats) == 0) {
-        printf("Estadísticas de memoria para PID %d:\n", pid);
-        printf("  Memoria reservada: %lu KB\n", stats.reserved_kb);
-        printf("  Memoria utilizada: %lu KB\n", stats.committed_kb);
-        printf("  Porcentaje utilizado: %lu%%\n", stats.committed_pct);
-        printf("  OOM Score: %d\n", stats.oom_score);
+    ssize_t ret = syscall(552, pid, stats, buffer_size);
 
-        check_proc_oom_score(pid);
-    } else {
+    if (ret < 0) {
         perror("Error al obtener estadísticas de memoria");
         return errno;
     }
 
+    size_t num_entries = ret / sizeof(struct process_mem_stats);
+
+    // Mostrar resultados
+    print_table_header();
+    for (size_t i = 0; i < num_entries; i++) {
+        print_process_stats(&stats[i]);
+    }
+
     return 0;
 }
-
-
-
-// #include <stdio.h>
-// #include <unistd.h>
-// #include <sys/syscall.h>
-// #include <errno.h>
-
-// struct process_mem_stats {
-//     unsigned long reserved_kb;    // Memoria reservada en KB
-//     unsigned long committed_kb;   // Memoria utilizada en KB
-//     unsigned long committed_pct;  // Porcentaje de memoria utilizada
-//     int oom_score;                // OOM Score
-// };
-
-// int main(int argc, char *argv[]) {
-//     if (argc != 2) {
-//         fprintf(stderr, "Uso: %s <pid>\n", argv[0]);
-//         return 1;
-//     }
-
-//     pid_t pid = atoi(argv[1]);
-//     struct process_mem_stats stats;
-
-//     if (syscall(552, pid, &stats) == 0) {
-//         printf("Estadísticas de memoria para PID %d:\n", pid);
-//         printf("  Memoria reservada: %lu KB\n", stats.reserved_kb);
-//         printf("  Memoria utilizada: %lu KB\n", stats.committed_kb);
-//         printf("  Porcentaje utilizado: %lu%%\n", stats.committed_pct);
-//         printf("  OOM Score: %d\n", stats.oom_score);
-//     } else {
-//         perror("Error al obtener estadísticas de memoria");
-//         return errno;
-//     }
-
-//     return 0;
-// }
