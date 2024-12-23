@@ -92,7 +92,22 @@ Busqueda de información, implementación de la syscall taro_tamalloc, script 1 
 Día 2. 20/12/2024
 Implementación de código para la syscall de conteo de memoria reservada y memoria utilizada, arreglo de errores (installación de python corrompio el sistema).
 
-[https://community.wandisco.com/s/article/Guide-to-Out-of-Memory-OOM-events-and-decoding-their-logging] 
+[https://community.wandisco.com/s/article/Guide-to-Out-of-Memory-OOM-events-and-decoding-their-logging]
+
+Día 3. 21/12/2024
+Se busco una solución para el score de oom.
+[https://stackoverflow.com/questions/38597965/difference-between-resident-set-size-rss-and-java-total-committed-memory-nmt]
+[https://lwn.net/Articles/391222/]
+[https://lwn.net/Articles/548180/]
+
+Día 4. 22/12/2024
+Implementación de las syscalls 2 y 3 con el defecto de que no se logro concretar el score de oom.
+
+Día 5. 23/12/2024
+Realización de pruebas unitarias y conjuntas a las syscalls nuevas.
+
+Se encontro un error al momento de intentar ejecutar PINCE, se leyo el siguiente foro para solucionarlo.
+[https://forums.linuxmint.com/viewtopic.php?t=400193]
 
 
 ## 9. Reflexión Personal

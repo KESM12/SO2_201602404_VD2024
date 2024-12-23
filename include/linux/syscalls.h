@@ -642,6 +642,7 @@ asmlinkage long sys_capture_memory_snapshot(struct mem_snapshot *snapshot); //me
 asmlinkage long sys_track_syscall_usage(void);
 asmlinkage long sys_get_io_throttle(pid_t pid, struct io_stats *stats); //leer los datos io
 asmlinkage long sys_taro_tamalloc(size_t size, void __user **user_ptr); //tamalloc
+asmlinkage long sys_taro_tod_mem_stats(struct total_mem_stats __user *totals);
 // 4 anteriores para el proyecto.
 asmlinkage long sys_kill(pid_t pid, int sig);
 asmlinkage long sys_tkill(pid_t pid, int sig);

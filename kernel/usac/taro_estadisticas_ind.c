@@ -3,7 +3,7 @@
 #include <linux/mm.h>
 #include <linux/sched.h>
 #include <linux/uaccess.h>
-#include <linux/oom.h> // Incluye funciones relacionadas con el cálculo de OOM
+#include <linux/oom.h> 
 
 struct process_mem_stats {
     pid_t pid;                    // PID del proceso
@@ -53,7 +53,7 @@ SYSCALL_DEFINE3(taro_ind_mem_stats, pid_t, pid, struct process_mem_stats __user 
                                         ? (local_stats.committed_kb * 100) / local_stats.reserved_kb
                                         : 0;
 
-        // Calcular OOM Score
+        // Calcular OOM Score No salio xd ni modo toco dejarlo así 
         badness = oom_badness(task, total_pages);
         oom_score_adj = task->signal->oom_score_adj;
         badness += (badness * oom_score_adj) / 1000;
@@ -72,7 +72,7 @@ SYSCALL_DEFINE3(taro_ind_mem_stats, pid_t, pid, struct process_mem_stats __user 
         for_each_process(task) {
             if (copied + sizeof(local_stats) > stats_len) {
                 rcu_read_unlock();
-                return -ENOSPC; // Espacio insuficiente en el buffer
+                return -ENOSPC; // Valida si hay espacio insuficiente en el buffer
             }
 
             mm = task->mm;
@@ -106,76 +106,3 @@ SYSCALL_DEFINE3(taro_ind_mem_stats, pid_t, pid, struct process_mem_stats __user 
         return copied; // Retorna la cantidad de datos copiados
     }
 }
-
-
-
-
-// #include <linux/kernel.h>
-// #include <linux/syscalls.h>
-// #include <linux/mm.h>
-// #include <linux/sched.h>
-// #include <linux/uaccess.h>
-// #include <linux/oom.h>  // Incluye funciones relacionadas con el cálculo de OOM
-
-// struct process_mem_stats {
-//     unsigned long reserved_kb;    // Memoria reservada en KB
-//     unsigned long committed_kb;   // Memoria utilizada en KB
-//     unsigned long committed_pct;  // Porcentaje de memoria utilizada
-//     int oom_score;                // OOM Score
-// };
-
-// SYSCALL_DEFINE2(taro_ind_mem_stats, pid_t, pid, struct process_mem_stats __user *, stats) {
-//     struct task_struct *task;
-//     struct process_mem_stats local_stats;
-//     struct mm_struct *mm;
-//     unsigned long rss_kb;
-//     unsigned long total_memory_kb = totalram_pages() * PAGE_SIZE / 1024;
-
-//     // Buscar el proceso objetivo por su PID
-//     rcu_read_lock();
-//     task = find_task_by_vpid(pid);
-//     if (!task) {
-//         rcu_read_unlock();
-//         return -ESRCH; // Proceso no encontrado
-//     }
-
-//     get_task_struct(task); // Asegurar que el proceso no sea eliminado durante el acceso
-//     rcu_read_unlock();
-
-//     mm = task->mm;
-//     if (!mm) {
-//         put_task_struct(task);
-//         return -EFAULT; // El proceso no tiene memoria asignada
-//     }
-
-//     // Calcular memoria reservada en KB
-//     local_stats.reserved_kb = (mm->total_vm * PAGE_SIZE) / 1024;
-
-//     // Calcular memoria utilizada (committed) en KB
-//     rss_kb = (get_mm_rss(mm) * PAGE_SIZE) / 1024;
-//     local_stats.committed_kb = rss_kb;
-
-//     // Calcular el porcentaje de memoria utilizada
-//     if (local_stats.reserved_kb > 0) {
-//         local_stats.committed_pct = (local_stats.committed_kb * 100) / local_stats.reserved_kb;
-//     } else {
-//         local_stats.committed_pct = 0; // Evitar división por cero
-//     }
-
-//     // Calcular el OOM Score
-//     local_stats.oom_score = (rss_kb * 1000) / total_memory_kb; // Escalar en rango de 0-1000
-//     local_stats.oom_score = local_stats.oom_score + task->signal->oom_score_adj;
-
-//     // Asegurarse de que el OOM Score no sea negativo
-//     if (local_stats.oom_score < 0) {
-//         local_stats.oom_score = 0;
-//     }
-
-//     put_task_struct(task);
-
-//     // Copiar resultados al espacio de usuario
-//     if (copy_to_user(stats, &local_stats, sizeof(local_stats)))
-//         return -EFAULT;
-
-//     return 0; // Éxito
-// }
