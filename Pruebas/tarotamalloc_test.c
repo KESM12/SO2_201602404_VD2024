@@ -13,7 +13,7 @@ int main() {
     printf("Implementación de Tamalloc para asignación de memoria. Presione ENTER para continuar...\n");
     getchar();
 
-    size_t total_size = 100 * 1024 * 1024; // 100 MB
+    size_t total_size = 21 * 1024 * 1024; // 20 MB
 
     // Use the tamalloc syscall
     char *buffer = (char *)syscall(SYS_TAMALLOC, total_size);
