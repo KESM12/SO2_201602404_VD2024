@@ -1,9 +1,9 @@
 # Manual Técnico
 
 ## 1. Introducción
-Describe el desarrollo e implementación de tres syscalls personalizadas en el kernel de Linux para gestionar y analizar el uso de memoria en el sistema. El proyecto tiene como objetivo principal explorar y modificar las capacidades nativas del kernel, mejorando la gestión de recursos y facilitando el monitoreo de estadísticas de memoria.
+Describe el desarrollo e implementación de tres syscalls personalizadas en el kernel de Linux para gestionar y analizar el uso de memoria en el sistema. El proyecto tiene como objetivo general explorar y modificar las capacidades nativas del kernel, mejorando la gestión de recursos y facilitando el monitoreo de estadísticas de memoria.
 
-- **Objetivo del proyecto**: Implementación de dos algoritmos de planificación y sincronización en el kernel de Linux.
+- **Objetivo del proyecto**: Implementación de tres algoritmos de planificación y sincronización en el kernel de Linux.
 
 
 ---
@@ -26,7 +26,7 @@ Describe el desarrollo e implementación de tres syscalls personalizadas en el k
 Se realizaron 3 syscalls, con el objetivo de ver el funcionamiento de la memoria en linux mint.
 
 ### Syscall 1 (Tamalloc).
-Este código define una syscall taro_tamalloc que asigna memoria virtual en el kernel.
+Este código define una syscall (taro_tamalloc) que asigna memoria virtual en el kernel.
 
 Usa do_mmap para mapear memoria virtual sin reservar páginas físicas inicialmente (lazy allocation).
 Verificación y retorno:
