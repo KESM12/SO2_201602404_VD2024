@@ -5,9 +5,11 @@
 #include <sys/syscall.h>
 #include <errno.h>
 #include <time.h>
+#include <string.h>
 
 #define SYS_TAMALLOC 551
-int main() {
+int main()
+{
     printf("PID: %d asignado a taro_Tamalloc.\n", getpid());
 
     printf("Implementación de Tamalloc para asignación de memoria. Presione ENTER para continuar...\n");
@@ -17,29 +19,36 @@ int main() {
 
     // Use the tamalloc syscall
     char *buffer = (char *)syscall(SYS_TAMALLOC, total_size);
-    if ((long)buffer < 0) {
+    if ((long)buffer < 0)
+    {
         perror("Error en Tamalloc");
         return 1;
     }
     printf("Alojamiento de memoria (%zu bytes) usando Tamalloc en la dirección: %p\n", total_size, buffer);
-    printf("Presione ENTER para comenzar a leer la memoria byte a byte...\n");
+    printf("Presione ENTER para comenzar a escribir 'kevin' y 'taro' aleatoriamente en la memoria...\n");
     getchar();
 
     srand(time(NULL));
 
-    // Read memory byte by byte and verify it is zero
-    for (size_t i = 0; i < total_size; i++) {
-        char t = buffer[i]; // triggers lazy allocation (with zeroing :D )
-        if (t != 0) {
-            printf("ERROR FATAL: La memoria en el byte %zu no se inicializó a 0.\n", i);
-            return 10;
+    size_t i = 0;
+    while (i < total_size)
+    {
+        // Randomly decide whether to write "kevin" or "taro"
+        const char *str_to_write = (rand() % 2 == 0) ? "kevin" : "taro";
+        size_t len = strlen(str_to_write);
+
+        // Ensure we do not exceed the allocated buffer
+        if (i + len > total_size)
+        {
+            break;
         }
 
-        //Write a random A-Z char to trigger CoW
-        char random_letter = 'A' + (rand() % 26);
-        buffer[i] = random_letter;
+        // Write the string to the buffer
+        memcpy(buffer + i, str_to_write, len);
+        i += len;
 
-        if (i % (1024 * 1024) == 0 && i > 0) { // Every 1 MB
+        if (i % (1024 * 1024) == 0 && i > 0)
+        { // Every 1 MB
             printf("%zu MB Comprobados\n", i / (1024 * 1024));
             sleep(1);
         }

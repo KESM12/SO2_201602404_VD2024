@@ -16,18 +16,22 @@ struct process_mem_stats {
 };
 
 void print_table_header() {
-    printf("%-10s %-15s %-15s %-10s %-10s\n", "PID", "Reserved (KB)", "Committed (KB)", "Pct (%)", "OOM Score");
-    printf("%-10s %-15s %-15s %-10s %-10s\n", "----------", "---------------", "---------------", "----------", "----------");
+    printf("+----------+---------------+---------------+----------+-----------+\n");
+    printf("| %-8s | %-13s | %-13s | %-8s | %-8s |\n", 
+           "PID", "Reserved (KB)", "Committed(KB)", "Pct (%)", "OOM Score");
+    printf("+----------+---------------+---------------+----------+-----------+\n");
 }
 
 void print_process_stats(struct process_mem_stats *stats) {
-    printf("%-10d %-15lu %-15lu %-10lu %-10d\n",
+    printf("| %-8d | %-13lu | %-13lu | %-8lu | %-8d  |\n",
            stats->pid,
            stats->reserved_kb,
            stats->committed_kb,
            stats->committed_pct,
            stats->oom_score);
+    printf("+----------+---------------+---------------+----------+-----------+\n");
 }
+
 
 int main(int argc, char *argv[]) {
     if (argc != 2) {
