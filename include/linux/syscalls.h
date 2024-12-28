@@ -644,6 +644,11 @@ asmlinkage long sys_get_io_throttle(pid_t pid, struct io_stats *stats); //leer l
 asmlinkage long sys_taro_tamalloc(size_t size, void __user **user_ptr); //tamalloc
 asmlinkage long sys_taro_tod_mem_stats(struct total_mem_stats __user *totals);
 // 4 anteriores para el proyecto.
+asmlinkage long sys_taro_add_memory_limit(pid_t pid, long limit);
+asmlinkage long sys_taro_get_memory_limits(struct memory_limitation __user *, size_t, int __user *);
+asmlinkage long sys_taro_update_memory_limit(pid_t process_pid, size_t memory_limit);
+asmlinkage long sys_taro_remove_memory_limit(pid_t process_pid);
+// 4 anteriores para el proyecto 3.
 asmlinkage long sys_kill(pid_t pid, int sig);
 asmlinkage long sys_tkill(pid_t pid, int sig);
 asmlinkage long sys_tgkill(pid_t tgid, pid_t pid, int sig);
