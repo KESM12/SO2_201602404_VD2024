@@ -104,3 +104,102 @@ SYSCALL_DEFINE3(taro_get_memory_limits, struct memory_limitation*, u_processes_b
     kfree(k_buffer);
     return 0;
 }
+
+// Syscall 3: Actualizar el límite de memoria de un proceso
+SYSCALL_DEFINE2(taro_update_memory_limit, pid_t, process_pid, size_t, memory_limit) {
+    struct memory_limitation *current_node;
+
+    // Validar PID y límite de memoria no negativos
+    if (process_pid < 0 || memory_limit <= 0) {
+        pr_info("taro_update_memory_limit: PID %d o límite de memoria %zu inválido.\n", process_pid, memory_limit);
+        return -EINVAL;
+    }
+
+    // Verificar permisos de superusuario
+    if (!capable(CAP_SYS_ADMIN)) {
+        pr_info("taro_update_memory_limit: Permiso denegado para PID %d.\n", process_pid);
+        return -EPERM;
+    }
+
+    mutex_lock(&memory_limit_mutex);
+
+    // Buscar el proceso en la lista
+    current_node = memory_limit_head;
+    while (current_node != NULL) {
+        if (current_node->pid == process_pid) {
+            // Verificar si el proceso ya excede el nuevo límite
+            struct task_struct *task = find_task_by_vpid(process_pid);
+            if (!task) {
+                mutex_unlock(&memory_limit_mutex);
+                pr_info("taro_update_memory_limit: PID %d no encontrado.\n", process_pid);
+                return -ESRCH;
+            }
+
+            if (task->mm && task->mm->total_vm > memory_limit) {
+                mutex_unlock(&memory_limit_mutex);
+                pr_info("taro_update_memory_limit: PID %d ya excede el nuevo límite de memoria %zu.\n", process_pid, memory_limit);
+                return -100;
+            }
+
+            // Actualizar el límite de memoria
+            current_node->memory_limit = memory_limit;
+            mutex_unlock(&memory_limit_mutex);
+            pr_info("taro_update_memory_limit: PID %d actualizado con nuevo límite %zu bytes.\n", process_pid, memory_limit);
+            return 0;
+        }
+        current_node = current_node->next;
+    }
+
+    mutex_unlock(&memory_limit_mutex);
+    pr_info("taro_update_memory_limit: PID %d no encontrado en la lista.\n", process_pid);
+    return -102; // Proceso no está en la lista
+}
+
+// Syscall 4: Eliminar el límite de memoria de un proceso
+SYSCALL_DEFINE1(taro_remove_memory_limit, pid_t, process_pid) {
+    struct memory_limitation *current_node, *prev_node;
+
+    // Validar PID
+    if (process_pid < 0) {
+        pr_info("taro_remove_memory_limit: PID %d inválido.\n", process_pid);
+        return -EINVAL;
+    }
+
+    // Verificar permisos de superusuario
+    if (!capable(CAP_SYS_ADMIN)) {
+        pr_info("taro_remove_memory_limit: Permiso denegado para PID %d.\n", process_pid);
+        return -EPERM;
+    }
+
+    mutex_lock(&memory_limit_mutex);
+
+    // Buscar el proceso en la lista
+    current_node = memory_limit_head;
+    prev_node = NULL;
+
+    while (current_node != NULL) {
+        if (current_node->pid == process_pid) {
+            // Remover el nodo de la lista
+            if (prev_node == NULL) {
+                // El nodo a eliminar es el primero de la lista
+                memory_limit_head = current_node->next;
+            } else {
+                // El nodo a eliminar está en el medio o al final de la lista
+                prev_node->next = current_node->next;
+            }
+
+            kfree(current_node);
+            mutex_unlock(&memory_limit_mutex);
+
+            pr_info("taro_remove_memory_limit: PID %d removido correctamente.\n", process_pid);
+            return 0;
+        }
+
+        prev_node = current_node;
+        current_node = current_node->next;
+    }
+
+    mutex_unlock(&memory_limit_mutex);
+    pr_info("taro_remove_memory_limit: PID %d no encontrado en la lista.\n", process_pid);
+    return -102; // Proceso no está en la lista
+}

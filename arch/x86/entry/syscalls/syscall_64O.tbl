@@ -139,10 +139,10 @@
 128	64	rt_sigtimedwait		sys_rt_sigtimedwait
 129	64	rt_sigqueueinfo		sys_rt_sigqueueinfo
 130	common	rt_sigsuspend		sys_rt_sigsuspend
-131	64	sigaltstack		sys_sigaltstack
+131	64 sigaltstack		sys_sigaltstack
 132	common	utime			sys_utime
 133	common	mknod			sys_mknod
-134	64	uselib
+134	64 uselib
 135	common	personality		sys_personality
 136	common	ustat			sys_ustat
 137	common	statfs			sys_statfs
@@ -164,7 +164,7 @@
 153	common	vhangup			sys_vhangup
 154	common	modify_ldt		sys_modify_ldt
 155	common	pivot_root		sys_pivot_root
-156	64	_sysctl			sys_ni_syscall
+156	64 _sysctl sys_ni_syscall
 157	common	prctl			sys_prctl
 158	common	arch_prctl		sys_arch_prctl
 159	common	adjtimex		sys_adjtimex
@@ -435,6 +435,5 @@
 557 common taro_add_memory_limit sys_taro_add_memory_limit
 558 common taro_get_memory_limits sys_taro_get_memory_limits
 559 common taro_update_memory_limit sys_taro_update_memory_limit
-560 common taro_remove_memory_limit sys_taro_remove_memory_limit
 # This is the end of the legacy x32 range.  Numbers 548 and above are
 # not special and are not to be used for x32-specific syscalls.

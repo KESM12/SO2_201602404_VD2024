@@ -646,10 +646,8 @@ asmlinkage long sys_taro_tod_mem_stats(struct total_mem_stats __user *totals);
 // 4 anteriores para el proyecto.
 asmlinkage long sys_taro_add_memory_limit(pid_t process_pid, size_t memory_limit);
 asmlinkage long sys_taro_get_memory_limits(struct memory_limitation __user *u_processes_buffer, size_t max_entries, int __user *processes_returned);
-// asmlinkage long sys_taro_add_memory_limit(pid_t pid, long limit);
-// asmlinkage long sys_taro_get_memory_limits(struct memory_limitation __user *u_processes_buffer, size_t max_entries, int __user *processes_returned);
-// asmlinkage long sys_taro_update_memory_limit(pid_t process_pid, size_t memory_limit);
-// asmlinkage long sys_taro_remove_memory_limit(pid_t process_pid);
+asmlinkage long sys_taro_update_memory_limit(pid_t process_pid, size_t memory_limit);
+asmlinkage long sys_taro_remove_memory_limit(pid_t process_pid);
 // 4 anteriores para el proyecto 3.
 asmlinkage long sys_kill(pid_t pid, int sig);
 asmlinkage long sys_tkill(pid_t pid, int sig);

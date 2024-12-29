@@ -5,5 +5,3 @@ obj-y += taro_tamalloc.o
 obj-y += taro_estadisticas_ind.o
 obj-y += taro_estadisticas_tod.o
 obj-y += taro_mani_mem.o
-# obj-y += taro_add_memory_limit.o
-# obj-y += taro_get_memory_limits.o
