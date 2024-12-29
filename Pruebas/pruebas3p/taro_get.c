@@ -8,7 +8,7 @@
 
 struct memory_limitation {
     pid_t pid;
-    long limit;
+    size_t limit;
 };
 
 int main() {
