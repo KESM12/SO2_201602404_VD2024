@@ -434,8 +434,5 @@
 553 common taro_tod_mem_stats sys_taro_tod_mem_stats
 557 common taro_add_memory_limit sys_taro_add_memory_limit
 558 common taro_get_memory_limits sys_taro_get_memory_limits
-559 common taro_update_memory_limit sys_taro_update_memory_limit
-560 common taro_remove_memory_limit sys_taro_remove_memory_limit
 # This is the end of the legacy x32 range.  Numbers 548 and above are
 # not special and are not to be used for x32-specific syscalls.
-

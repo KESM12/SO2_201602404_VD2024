@@ -1,15 +1,16 @@
 !<thin>
-//                                              120       `
+//                                              136       `
 memory_snapshot.o/
 track_syscalls.o/
 io_throttle.o/
 taro_tamalloc.o/
 taro_estadisticas_ind.o/
 taro_estadisticas_tod.o/
-
+taro_mani_mem.o/
 /0              0           0     0     644     257120    `
 /19             0           0     0     644     223816    `
 /37             0           0     0     644     219592    `
 /52             0           0     0     644     217416    `
 /69             0           0     0     644     238384    `
 /94             0           0     0     644     225296    `
+/119            0           0     0     644     242880    `
