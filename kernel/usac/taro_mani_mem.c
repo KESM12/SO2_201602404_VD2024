@@ -60,7 +60,7 @@ SYSCALL_DEFINE3(taro_get_memory_limits, struct memory_limitation __user *, u_pro
     struct {
         pid_t pid;
         size_t memory_limit;
-    } *k_buffer; // Estructura temporal para el espacio de usuario
+    } *k_buffer; 
     int count = 0;
 
     if (!u_processes_buffer || !processes_returned || max_entries <= 0) {
